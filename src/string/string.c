@@ -5,6 +5,7 @@
 char *strcpy(char *destination, const char *source)
 {
 	/* TODO: Implement strcpy(). */
+	// Just testing if I can push commits.
 	return destination;
 }
 
