@@ -5,25 +5,94 @@
 char *strcpy(char *destination, const char *source)
 {
 	/* TODO: Implement strcpy(). */
-	// Just testing if I can push commits.
-	return destination;
+	char *dest_start = destination;
+
+	while (*source != '\0') {
+		*destination = *source;
+		destination++;
+		source++;
+	}
+
+	*destination = '\0';
+
+	return dest_start;
 }
 
 char *strncpy(char *destination, const char *source, size_t len)
 {
 	/* TODO: Implement strncpy(). */
-	return destination;
+	if (len == 0) {
+		return destination;
+	}
+
+	char *dest_start = destination;
+
+	size_t char_cnt = 0;
+
+	while (*source != '\0') {
+		*destination = *source;
+		destination++;
+		source++;
+
+		char_cnt++;
+		if (char_cnt == len) {
+			return dest_start;
+		}
+	}
+
+	while (char_cnt < len) {
+		*destination = '\0';
+		destination++;
+		char_cnt++;
+	}
+
+	return dest_start;
 }
 
 char *strcat(char *destination, const char *source)
 {
 	/* TODO: Implement strcat(). */
+	char *dest_start = destination;
+
+	while (*destination != '\0') {
+		destination++;
+	}
+
+	while (*source != '\0') {
+		*destination = *source;
+		destination++;
+		source++;
+	}
+
+	*destination = '\0';
+
 	return destination;
 }
 
 char *strncat(char *destination, const char *source, size_t len)
 {
 	/* TODO: Implement strncat(). */
+	if (len == 0) {
+		return destination;
+	}
+
+	char *dest_start = destination;
+
+	while (*destination != '\0') {
+		destination++;
+	}
+
+	size_t char_cnt = 0;
+
+	while (*source != 0 && char_cnt < len) {
+		*destination = *source;
+		destination++;
+		source++;
+		char_cnt++;
+	}
+
+	*destination = '\0';
+
 	return destination;
 }
 
