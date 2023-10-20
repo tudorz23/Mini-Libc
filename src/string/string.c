@@ -286,24 +286,87 @@ char *strrstr(const char *haystack, const char *needle)
 
 void *memcpy(void *destination, const void *source, size_t num)
 {
-	/* TODO: Implement memcpy(). */
+	size_t byte_cnt = 0;
+	char *char_dest = (char *)destination;
+	char *char_src = (char *)source;
+
+	// Copy byte by byte.
+	while (byte_cnt < num) {
+		*char_dest = *char_src;
+		char_dest++;
+		char_src++;
+		byte_cnt++;
+	}
+
 	return destination;
 }
 
 void *memmove(void *destination, const void *source, size_t num)
 {
-	/* TODO: Implement memmove(). */
+	if (num == 0 || destination == source) {
+		return destination;
+	}
+
+	char *char_dest = (char *)destination;
+	char *char_src = (char *)source;
+
+	// Check how (if) the two blocks of memory overlap.
+	// Also works if they do not overlap.
+	if (char_src > char_dest) {
+		// Copy from left to right.
+		while (num > 0) {
+			*char_dest = *char_src;
+			char_src++;
+			char_dest++;
+			num--;
+		}
+	} else {
+		// Copy from right to left.
+		char_src += num;
+		char_dest += num;
+
+		while (num) {
+			char_src--;
+			char_dest--;
+			*char_dest = *char_src;
+			num--;
+		}
+	}
+
 	return destination;
 }
 
 int memcmp(const void *ptr1, const void *ptr2, size_t num)
 {
 	/* TODO: Implement memcmp(). */
-	return -1;
+	char *char_ptr1 = (char *)ptr1;
+	char *char_ptr2 = (char *)ptr2;
+
+	while (num > 0) {
+		int char_cmp = (int)*char_ptr1 - (int)*char_ptr2;
+		if (char_cmp != 0) {
+			return char_cmp;
+		}
+
+		num--;
+		char_ptr1++;
+		char_ptr2++;
+	}
+
+	return 0;
 }
 
 void *memset(void *source, int value, size_t num)
 {
 	/* TODO: Implement memset(). */
+	unsigned char char_value = (unsigned char)value;
+	char *char_src = (char *)source;
+
+	while (num > 0) {
+		*char_src = char_value;
+		char_src++;
+		num--;
+	}
+
 	return source;
 }
