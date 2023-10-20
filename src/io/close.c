@@ -11,7 +11,20 @@ int close(int fd)
 	long fd_result = syscall(__NR_close, fd);
 
 	if (fd_result < 0) {
-		errno = -fd_result;
+		switch (fd_result) {
+			case -EBADF:
+				errno = EBADF;
+				break;
+			case -EINTR:
+				errno = EINTR;
+				break;
+			case -ENOSPC:
+				errno = ENOSPC;
+				break;
+			default:
+				errno = EIO;
+				break;
+		}
 		return -1;
 	}
 
