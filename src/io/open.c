@@ -7,7 +7,6 @@
 
 int open(const char *filename, int flags, ...)
 {
-	/* TODO: Implement open system call. */
 	mode_t mode = 0;
 
 	if (flags & O_CREAT) {
@@ -17,7 +16,8 @@ int open(const char *filename, int flags, ...)
 		va_end(arg_list);
 	}
 
-	long fd_result = syscall(__NR_open, filename, flags, mode);
+	// File descriptor that will be returned in case of success.
+	int fd_result = syscall(__NR_open, filename, flags, mode);
 	if (fd_result < 0) {
 		switch (fd_result) {
 			case -EACCES:

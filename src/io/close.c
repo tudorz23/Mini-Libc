@@ -7,11 +7,10 @@
 
 int close(int fd)
 {
-	/* TODO: Implement close(). */
-	long fd_result = syscall(__NR_close, fd);
+	int syscall_result = syscall(__NR_close, fd);
 
-	if (fd_result < 0) {
-		switch (fd_result) {
+	if (syscall_result < 0) {
+		switch (syscall_result) {
 			case -EBADF:
 				errno = EBADF;
 				break;
@@ -28,5 +27,6 @@ int close(int fd)
 		return -1;
 	}
 
-	return fd_result;
+	// The return value is 0 in case of success.
+	return 0;
 }
