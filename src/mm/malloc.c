@@ -10,7 +10,18 @@
 void *malloc(size_t size)
 {
 	/* TODO: Implement malloc(). */
-	return NULL;
+	if (size <= 0) {
+		return NULL;
+	}
+
+	mem_list_init();
+
+	int try = mem_list_add(NULL, size);
+	if (try == -1) {
+		return NULL;
+	}
+
+	return &mem_list_head;
 }
 
 void *calloc(size_t nmemb, size_t size)
