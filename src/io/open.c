@@ -17,48 +17,11 @@ int open(const char *filename, int flags, ...)
 	}
 
 	// File descriptor that will be returned in case of success.
-	int fd_result = syscall(__NR_open, filename, flags, mode);
-	if (fd_result < 0) {
-		switch (fd_result) {
-			case -EACCES:
-				errno = EACCES;
-				break;
-			case -EEXIST:
-				errno = EEXIST;
-				break;
-			case -EINTR:
-				errno = EINTR;
-				break;
-			case -EISDIR:
-				errno = EISDIR;
-				break;
-			case -EMFILE:
-				errno = EMFILE;
-				break;
-			case -ENFILE:
-				errno = ENFILE;
-				break;
-			case -ENOENT:
-				errno = ENOENT;
-				break;
-			case -ENOSPC:
-				errno = ENOSPC;
-				break;
-			case -ENXIO:
-				errno = ENXIO;
-				break;
-			case -EROFS:
-				errno = EROFS;
-				break;
-			case -ENOTDIR:
-				errno = ENOTDIR;
-				break;
-			default:
-				errno = EIO;
-				break;
-		}
+	long syscall_result = syscall(__NR_open, filename, flags, mode);
+	if (syscall_result < 0) {
+		errno = -syscall_result;
 		return -1;
 	}
 
-	return fd_result;
+	return syscall_result;
 }

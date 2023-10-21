@@ -7,20 +7,10 @@
 
 off_t lseek(int fd, off_t offset, int whence)
 {
-	off_t syscall_result = syscall(__NR_lseek, fd, offset, whence);
+	long syscall_result = syscall(__NR_lseek, fd, offset, whence);
 
 	if (syscall_result < 0) {
-		switch (syscall_result) {
-			case -EBADF:
-				errno = EBADF;
-				break;
-			case -EINVAL:
-				errno = EINVAL;
-				break;
-			case -ESPIPE:
-				errno = ESPIPE;
-				break;
-		}
+		errno = -syscall_result;
 		return -1;
 	}
 

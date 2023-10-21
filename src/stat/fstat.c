@@ -6,13 +6,10 @@
 
 int fstat(int fd, struct stat *st)
 {
-	int syscall_result = syscall(__NR_fstat, fd, st);
+	long syscall_result = syscall(__NR_fstat, fd, st);
 
 	if (syscall_result < 0) {
-		if (syscall_result == -EBADF) {
-			errno = EBADF;
-		} 
-
+		errno = -syscall_result;
 		return -1;
 	}
 

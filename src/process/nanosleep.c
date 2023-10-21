@@ -5,14 +5,10 @@
 
 int nanosleep(const struct timespec *requested_time, struct timespec *remaining)
 {
-    int syscall_result = syscall(__NR_nanosleep, requested_time, remaining);
+    long syscall_result = syscall(__NR_nanosleep, requested_time, remaining);
 
     if (syscall_result < 0) {
-        if (syscall_result == -EINTR) {
-            errno = EINTR;
-        } else if (syscall_result == -EINVAL) {
-            errno = EINVAL;
-        }
+        errno = -syscall_result;
         return -1;
     }
 

@@ -7,32 +7,10 @@
 
 int ftruncate(int fd, off_t length)
 {
-	int syscall_result = syscall(__NR_ftruncate, fd, length);
+	long syscall_result = syscall(__NR_ftruncate, fd, length);
 
 	if (syscall_result < 0) {
-		switch (syscall_result) {
-			case -EBADF:
-				errno = EBADF;
-				break;
-			case -EACCES:
-				errno = EACCES;
-				break;
-			case -EINVAL:
-				errno = EINVAL;
-				break;
-			case -EFBIG:
-				errno = EFBIG;
-				break;
-			case -EIO:
-				errno = EIO;
-				break;
-			case -EPERM:
-				errno = EPERM;
-				break;
-			case -EINTR:
-				errno = EINTR;
-				break;
-		}
+		errno = -syscall_result;
 		return -1;
 	}
 
