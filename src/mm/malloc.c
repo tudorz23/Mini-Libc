@@ -17,13 +17,13 @@ void *malloc(size_t size)
 
 	// Need a way to know if the initialization has been previously
 	// done or not. Options were a global variable or a static one,
-	// I chose a static one. 
+	// I chose a static one.
 	static int init_done = 0;
 	if (init_done == 0) {
 		mem_list_init();
 		init_done = 1;
 	}
-	
+
 	void *allocated_memory = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (allocated_memory == MAP_FAILED) {
 		return NULL;

@@ -101,7 +101,7 @@ int strcmp(const char *str1, const char *str2)
 	}
 
 	// Return the compare result of the latest characters.
-	// Works if any of them is NULL too.
+	// Works if any of them is '\0' too.
 	return ((int)*str1 - (int)*str2);
 }
 
@@ -174,7 +174,7 @@ char *strrchr(const char *str, int c)
 		iterator++;
 		len++;
 	}
-	
+
 	// Check if '\0' is wanted.
 	if (c_char == '\0') {
 		return iterator;
@@ -217,7 +217,7 @@ char *strstr(const char *haystack, const char *needle)
 				needle = needle_start;
 				matching_start_point = NULL;
 			}
-			
+
 			haystack++;
 			continue;
 		}
@@ -338,7 +338,6 @@ void *memmove(void *destination, const void *source, size_t num)
 
 int memcmp(const void *ptr1, const void *ptr2, size_t num)
 {
-	/* TODO: Implement memcmp(). */
 	char *char_ptr1 = (char *)ptr1;
 	char *char_ptr2 = (char *)ptr2;
 
@@ -358,7 +357,6 @@ int memcmp(const void *ptr1, const void *ptr2, size_t num)
 
 void *memset(void *source, int value, size_t num)
 {
-	/* TODO: Implement memset(). */
 	unsigned char char_value = (unsigned char)value;
 	char *char_src = (char *)source;
 
